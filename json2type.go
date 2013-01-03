@@ -4,17 +4,16 @@
 // Use of this source code is governed by a BSD-style
 // license that can be found in the LICENSE file.
 
-
 // This is only a helping tool... do not trust it too much
 // useful to run from inside Emacs with C-u M-|
 package main
 
 import (
-	"json"
+	"encoding/json"
 	"fmt"
 	"io/ioutil"
-	"strings"
 	"os"
+	"strings"
 )
 
 func camel(s string) string {
@@ -29,7 +28,10 @@ func camel(s string) string {
 func main() {
 	buf, _ := ioutil.ReadAll(os.Stdin)
 	var obj interface{}
-	json.Unmarshal(buf, &obj)
+	err := json.Unmarshal(buf, &obj)
+	if err != nil {
+		panic(err)
+	}
 	fmt.Println("type MyType ")
 	switch v := obj.(type) {
 	case []interface{}:
